@@ -17,15 +17,14 @@ public class RuleSimpleCredit implements Rule {
 
     @Override
     public Recommendation getRecommendation(UUID userId) {
-        boolean hasCredit = recommendationsRepository.hasProductType(userId, "CREDIT");
-        int debitDeposits = recommendationsRepository.getTotalDepositsByProductType(userId, "DEBIT");
-        int debitWithdraw = recommendationsRepository.getTotalWithdrawByProductType(userId, "DEBIT");
+        boolean userOf = recommendationsRepository.userOf(userId, "CREDIT",true);
+        boolean transactionSumCompareDepositWithdraw = recommendationsRepository.transactionSumCompareDepositWithdraw(userId, "DEBIT",">",false);
+        boolean transactionSumCompare = recommendationsRepository.transactionSumCompare(userId, "DEBIT","WITHDRAW",">",100000,false);
 
-        boolean condition1 = !hasCredit;
-        boolean condition2 = debitDeposits > debitWithdraw;
-        boolean condition3 = debitWithdraw > 100000;
 
-        if (condition1 && condition2 && condition3) {
+
+
+        if (userOf && transactionSumCompareDepositWithdraw && transactionSumCompare) {
             return new Recommendation(
                     "Простой кредит",
                     UUID.fromString("ab138afb-f3ba-4a93-b74f-0fcee86d447f"),
