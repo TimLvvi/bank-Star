@@ -17,16 +17,17 @@ public class RuleTopSaving implements Rule {
 
     @Override
     public Recommendation getRecommendation(UUID userId) {
-        boolean hasDebit = recommendationsRepository.hasProductType(userId, "DEBIT");
-        int debitDeposits = recommendationsRepository.getTotalDepositsByProductType(userId, "DEBIT");
-        int debitWithdraw = recommendationsRepository.getTotalWithdrawByProductType(userId, "DEBIT");
-        int savingWithdraw = recommendationsRepository.getTotalDepositsByProductType(userId, "SAVING");
+        boolean userOf = recommendationsRepository.userOf(userId, "DEBIT", false);
+        boolean transactionSumCompareDepositWithdraw = recommendationsRepository.transactionSumCompareDepositWithdraw(userId, "DEBIT",">",false);
+        boolean transactionSumCompare = recommendationsRepository.transactionSumCompare(userId, "SAVING","DEPOSIT",">=",50000,false);
+        boolean transactionSumCompare1 = recommendationsRepository.transactionSumCompare(userId, "DEBIT","DEPOSIT",">=",50000,false);
 
-        boolean condition1 = hasDebit;
-        boolean condition2 = (debitDeposits >= 50000) || (savingWithdraw >= 50000);
-        boolean condition3 = debitDeposits > debitWithdraw;
+        boolean transactionSumCompare3 = transactionSumCompare || transactionSumCompare1;
 
-        if (condition1 && condition2 && condition3) {
+
+
+
+        if (userOf && transactionSumCompare3 && transactionSumCompareDepositWithdraw ) {
             return new Recommendation(
                     "Top Saving",
                     UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"),

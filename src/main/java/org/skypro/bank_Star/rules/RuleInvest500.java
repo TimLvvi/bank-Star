@@ -17,11 +17,11 @@ public class RuleInvest500 implements Rule {
 
     @Override
     public Recommendation getRecommendation(UUID userId) {
-        boolean hasDebit = recommendationsRepository.hasProductType(userId, "DEBIT");
-        boolean hasInvest = recommendationsRepository.hasProductType(userId, "INVEST");
-        int savingDeposits = recommendationsRepository.getTotalDepositsByProductType(userId, "SAVING");
+        boolean userOf1= recommendationsRepository.userOf(userId, "DEBIT", false);
+        boolean userOf2 = recommendationsRepository.userOf(userId, "INVEST", true);
+        boolean transactionSumCompare = recommendationsRepository.transactionSumCompare(userId, "SAVING","DEPOSIT",">",1000,false);
 
-        if (hasDebit && !hasInvest && savingDeposits > 1000) {
+        if (userOf1 && userOf2 && transactionSumCompare) {
             return new Recommendation(
                     "Invest 500",
                     UUID.fromString("147f6a0f-3b91-413b-ab99-87f081d60d5a"),
