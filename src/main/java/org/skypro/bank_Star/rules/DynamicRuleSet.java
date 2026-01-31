@@ -1,11 +1,13 @@
 package org.skypro.bank_Star.rules;
 
+import jakarta.transaction.Transactional;
 import org.skypro.bank_Star.entity.DynamicRecommendation;
 import org.skypro.bank_Star.entity.DynamicRule;
 import org.skypro.bank_Star.model.Recommendation;
 import org.skypro.bank_Star.repository.DynamicRecommendationsRepositiry;
 import org.skypro.bank_Star.repository.RecommendationsRepository;
 import org.skypro.bank_Star.service.DynamicRecommendationService;
+import org.skypro.bank_Star.service.StatisticsRuleService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
@@ -17,12 +19,15 @@ import java.util.UUID;
 public class DynamicRuleSet {
     private DynamicRecommendationsRepositiry dynamicRecommendationsRepositiry;
     private RecommendationsRepository recommendationsRepository;
+    private StatisticsRuleService statisticsRuleService;
 
-    public DynamicRuleSet(DynamicRecommendationsRepositiry dynamicRecommendationsRepositiry, RecommendationsRepository recommendationsRepository) {
+    public DynamicRuleSet(DynamicRecommendationsRepositiry dynamicRecommendationsRepositiry, RecommendationsRepository recommendationsRepository, StatisticsRuleService statisticsRuleService) {
         this.dynamicRecommendationsRepositiry = dynamicRecommendationsRepositiry;
         this.recommendationsRepository = recommendationsRepository;
+        this.statisticsRuleService = statisticsRuleService;
     }
 
+    @Transactional
     public List<Recommendation> getDynamicRecommendation(UUID userId) {
         List<DynamicRecommendation> allDynamicRecommendation = dynamicRecommendationsRepositiry.findAll();
         List<Recommendation> resultRecommendationList = new ArrayList<>();
@@ -31,10 +36,17 @@ public class DynamicRuleSet {
 
             List<Boolean> resultBoolean = new ArrayList<>();
 
+            List<DynamicRule> dynamicRuleTrue = new ArrayList<>();
+
             for (DynamicRule dynamicRule : dynamicRecommendation.getDynamicRule()) {
                 if (dynamicRule.getQuery().equals("USER_OF")) {
                     boolean result = recommendationsRepository.userOf(userId, dynamicRule.getArguments().get(0), dynamicRule.getNegate());
                     resultBoolean.add(result);
+
+                    if (result) {
+                        dynamicRuleTrue.add(dynamicRule);
+                    }
+
                 }
             }
 
@@ -62,6 +74,11 @@ public class DynamicRuleSet {
             if (!resultBoolean.contains(false)) {
                 Recommendation result = new Recommendation(dynamicRecommendation.getProductName(),dynamicRecommendation.getProductId(),dynamicRecommendation.getProductText());
                 resultRecommendationList.add(result);
+            }
+
+
+            for (DynamicRule dynamicRule : dynamicRuleTrue) {
+                statisticsRuleService.incrementRuleCounter(dynamicRule);
             }
 
         }
