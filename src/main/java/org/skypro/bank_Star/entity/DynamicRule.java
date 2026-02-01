@@ -1,6 +1,7 @@
 package org.skypro.bank_Star.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import org.springframework.stereotype.Component;
 
@@ -27,8 +28,11 @@ public class DynamicRule {
     @ManyToOne
     @JoinColumn(name = "recommendation_id")
     @JsonBackReference
-
     private DynamicRecommendation dynamicRecommendation;
+
+    @OneToOne(mappedBy = "dynamicRule", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private StatisticsRule statisticsRule;
 
 
 
@@ -81,6 +85,14 @@ public class DynamicRule {
 
     public void setDynamicRecommendation(DynamicRecommendation dynamicRecommendation) {
         this.dynamicRecommendation = dynamicRecommendation;
+    }
+
+    public StatisticsRule getStatisticsRule() {
+        return statisticsRule;
+    }
+
+    public void setStatisticsRule(StatisticsRule statisticsRule) {
+        this.statisticsRule = statisticsRule;
     }
 
     @Override
