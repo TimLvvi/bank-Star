@@ -59,20 +59,20 @@ public class DynamicRuleSet {
 
             for (DynamicRule dynamicRule : dynamicRecommendation.getDynamicRule()) {
                 if (dynamicRule.getQuery().equals("TRANSACTION_SUM_COMPARE")) {
-                    boolean result = recommendationsRepository.transactionSumCompare(userId, dynamicRule.getArguments().get(0),dynamicRule.getArguments().get(1),dynamicRule.getArguments().get(2),Integer.parseInt(dynamicRule.getArguments().get(3)), dynamicRule.getNegate());
+                    boolean result = recommendationsRepository.transactionSumCompare(userId, dynamicRule.getArguments().get(0), dynamicRule.getArguments().get(1), dynamicRule.getArguments().get(2), Integer.parseInt(dynamicRule.getArguments().get(3)), dynamicRule.getNegate());
                     resultBoolean.add(result);
                 }
             }
 
             for (DynamicRule dynamicRule : dynamicRecommendation.getDynamicRule()) {
                 if (dynamicRule.getQuery().equals("TRANSACTION_SUM_COMPARE_DEPOSIT_WITHDRAW")) {
-                    boolean result = recommendationsRepository.transactionSumCompareDepositWithdraw(userId, dynamicRule.getArguments().get(0),dynamicRule.getArguments().get(1), dynamicRule.getNegate());
+                    boolean result = recommendationsRepository.transactionSumCompareDepositWithdraw(userId, dynamicRule.getArguments().get(0), dynamicRule.getArguments().get(1), dynamicRule.getNegate());
                     resultBoolean.add(result);
                 }
             }
 
             if (!resultBoolean.contains(false)) {
-                Recommendation result = new Recommendation(dynamicRecommendation.getProductName(),dynamicRecommendation.getProductId(),dynamicRecommendation.getProductText());
+                Recommendation result = new Recommendation(dynamicRecommendation.getProductName(), dynamicRecommendation.getProductId(), dynamicRecommendation.getProductText());
                 resultRecommendationList.add(result);
             }
 

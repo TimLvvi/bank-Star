@@ -73,10 +73,10 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
 
                         RecommendationResponse recommendationResponse = recommendationService.getRecommendation(id);
                         String s = recommendationResponse.getRecommendations().stream()
-                                .map(r->r.getName()+" - "+r.getText())
+                                .map(r -> r.getName() + " - " + r.getText())
                                 .collect(Collectors.joining("\n"));
 
-                        String s2 = "Здравствуйте "+firstName+" "+lastName+"\n"+"Новые продукты для вас:\n"+s.toString();
+                        String s2 = "Здравствуйте " + firstName + " " + lastName + "\n" + "Новые продукты для вас:\n" + s.toString();
 
 
                         SendMessage message = new SendMessage(chatId, s2);
@@ -90,8 +90,6 @@ public class TelegramBotUpdatesListener implements UpdatesListener {
                     telegramBot.execute(incorrectMessage);
                 }
             }
-
-
         });
         return UpdatesListener.CONFIRMED_UPDATES_ALL;
     }

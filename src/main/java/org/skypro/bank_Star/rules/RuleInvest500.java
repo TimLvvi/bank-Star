@@ -17,9 +17,9 @@ public class RuleInvest500 implements Rule {
 
     @Override
     public Recommendation getRecommendation(UUID userId) {
-        boolean userOf1= recommendationsRepository.userOf(userId, "DEBIT", false);
+        boolean userOf1 = recommendationsRepository.userOf(userId, "DEBIT", false);
         boolean userOf2 = recommendationsRepository.userOf(userId, "INVEST", true);
-        boolean transactionSumCompare = recommendationsRepository.transactionSumCompare(userId, "SAVING","DEPOSIT",">",1000,false);
+        boolean transactionSumCompare = recommendationsRepository.transactionSumCompare(userId, "SAVING", "DEPOSIT", ">", 1000, false);
 
         if (userOf1 && userOf2 && transactionSumCompare) {
             return new Recommendation(
@@ -29,7 +29,5 @@ public class RuleInvest500 implements Rule {
             );
         }
         return null;
-
-
     }
 }

@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.UUID;
 
+/**
+ * REST контроллер для получения рекомендаций.
+ * Основной endpoint для клиентских приложений.
+ */
 @RestController
 @RequestMapping("/recommendation")
 public class RecommendationsController {
@@ -18,9 +22,11 @@ public class RecommendationsController {
         this.recommendationService = recommendationService;
     }
 
+    /**
+     * Возвращает персонализированные рекомендации для пользователя.
+     */
     @GetMapping("/{user_id}")
     public RecommendationResponse getRecommendation(@PathVariable("user_id") UUID userId) {
         return recommendationService.getRecommendation(userId);
     }
-
 }

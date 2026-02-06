@@ -35,7 +35,6 @@ public class DynamicRule {
     private StatisticsRule statisticsRule;
 
 
-
     public DynamicRule(Long id, String query, List<String> arguments, Boolean negate, DynamicRecommendation dynamicRecommendation) {
         this.id = id;
         this.query = query;

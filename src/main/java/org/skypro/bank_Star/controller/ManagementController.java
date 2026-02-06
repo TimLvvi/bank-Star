@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Map;
 
+/**
+ * Контроллер для административных операций и мониторинга.
+ * Используется внешними системами для управления приложением.
+ */
 @RestController
 @RequestMapping("management")
 public class ManagementController {
@@ -21,17 +25,22 @@ public class ManagementController {
         this.recommendationsRepository = recommendationsRepository;
     }
 
+    /**
+     * Очищает все кэши рекомендаций.
+     * Вызывается при обновлении данных пользователей.
+     */
     @PostMapping("/clear-caches")
     public ResponseEntity clearCache() {
         recommendationsRepository.clearCache();
         return ResponseEntity.ok().build();
-
     }
 
+    /**
+     * Возвращает информацию о версии приложения.
+     */
     @GetMapping("/info")
     public String getInfo() {
-        String result = "name: " + buildProperties.getName()+"\nversion: " + buildProperties.getVersion();
-        return  result;
+        String result = "name: " + buildProperties.getName() + "\nversion: " + buildProperties.getVersion();
+        return result;
     }
-
 }

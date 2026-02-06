@@ -13,7 +13,7 @@ public class RecommendationRuleSet {
     private List<Rule> rules;
     private DynamicRuleSet dynamicRuleSet;
 
-    public RecommendationRuleSet(List<Rule> rules,DynamicRuleSet dynamicRuleSet) {
+    public RecommendationRuleSet(List<Rule> rules, DynamicRuleSet dynamicRuleSet) {
         this.rules = rules;
         this.dynamicRuleSet = dynamicRuleSet;
     }

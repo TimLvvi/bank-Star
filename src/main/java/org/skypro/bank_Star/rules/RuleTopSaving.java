@@ -18,16 +18,14 @@ public class RuleTopSaving implements Rule {
     @Override
     public Recommendation getRecommendation(UUID userId) {
         boolean userOf = recommendationsRepository.userOf(userId, "DEBIT", false);
-        boolean transactionSumCompareDepositWithdraw = recommendationsRepository.transactionSumCompareDepositWithdraw(userId, "DEBIT",">",false);
-        boolean transactionSumCompare = recommendationsRepository.transactionSumCompare(userId, "SAVING","DEPOSIT",">=",50000,false);
-        boolean transactionSumCompare1 = recommendationsRepository.transactionSumCompare(userId, "DEBIT","DEPOSIT",">=",50000,false);
+        boolean transactionSumCompareDepositWithdraw = recommendationsRepository.transactionSumCompareDepositWithdraw(userId, "DEBIT", ">", false);
+        boolean transactionSumCompare = recommendationsRepository.transactionSumCompare(userId, "SAVING", "DEPOSIT", ">=", 50000, false);
+        boolean transactionSumCompare1 = recommendationsRepository.transactionSumCompare(userId, "DEBIT", "DEPOSIT", ">=", 50000, false);
 
         boolean transactionSumCompare3 = transactionSumCompare || transactionSumCompare1;
 
 
-
-
-        if (userOf && transactionSumCompare3 && transactionSumCompareDepositWithdraw ) {
+        if (userOf && transactionSumCompare3 && transactionSumCompareDepositWithdraw) {
             return new Recommendation(
                     "Top Saving",
                     UUID.fromString("59efc529-2fff-41af-baff-90ccd7402925"),

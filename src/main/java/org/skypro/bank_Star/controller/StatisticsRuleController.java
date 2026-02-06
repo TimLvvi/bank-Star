@@ -9,22 +9,26 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+/**
+ * REST контроллер для работы со статистикой.
+ */
 @RestController
 @RequestMapping("rule")
 public class StatisticsRuleController {
 
-private StatisticsRuleService statisticsRuleService;
+    private StatisticsRuleService statisticsRuleService;
 
     public StatisticsRuleController(StatisticsRuleService statisticsRuleService) {
         this.statisticsRuleService = statisticsRuleService;
     }
 
+    /**
+     * Возвращает количество срабатывания правила.
+     */
     @GetMapping("/stats")
     public Stats getAllStatisticsRule() {
 
         List<StatisticsRule> stats = statisticsRuleService.getAll();
         return new Stats(stats);
     }
-
-
 }

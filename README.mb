@@ -1,0 +1,44 @@
+Банк «Стар» - Рекомендательная система
+Описание проекта:
+Система персональных рекомендаций банковских продуктов, которая анализирует финансовое поведение клиентов и предлагает релевантные продукты через API и Telegram-бота.
+
+Быстрый старт
+Запуск в разработке:
+./mvnw spring-boot:run
+
+Сборка:
+./mvnw clean package
+
+Запуск:
+java -jar target/bank_Star-0.0.1-SNAPSHOT.jar
+
+
+ Основные эндпоинты
+•	Рекомендации: GET /recommendation/{user_id}
+•	Управление правилами: POST/DELETE /dynamic_recommendations
+•	Статистика: GET /rule/stats
+•	Администрирование: POST /management/clear-caches
+
+
+Telegram бот
+•	Команда: /recommend Имя Фамилия
+•	Отправляет персонализированные рекомендации
+
+
+API документация:
+После запуска приложения:
+•	Swagger UI: http://localhost:8080/swagger-ui.html
+•	OpenAPI JSON: http://localhost:8080/v3/api-docs
+
+
+Технологический стек
+•	Java 17 + Spring Boot 3
+•	PostgreSQL (основная БД) + H2 (рекомендации)
+•	Spring Data JPA + Caffeine Cache
+•	Telegram Bot API + Swagger/OpenAPI
+
+
+ Акторы системы
+•	Клиенты — получают рекомендации
+•	Менеджеры банка — управляют правилами
+•	Внешние системы — мониторят и управляют

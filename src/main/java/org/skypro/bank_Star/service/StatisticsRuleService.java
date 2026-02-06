@@ -6,6 +6,10 @@ import org.skypro.bank_Star.repository.StatisticsRuleRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+/**
+ * Сервис для работы со статистикой срабатывания правил.
+ * Отслеживает и обновляет счетчики использования правил.
+ */
 
 @Service
 public class StatisticsRuleService {
@@ -14,11 +18,18 @@ public class StatisticsRuleService {
     public StatisticsRuleService(StatisticsRuleRepository statisticsRuleRepository) {
         this.statisticsRuleRepository = statisticsRuleRepository;
     }
-
+    /**
+     * Возвращает количество срабатывания правила.
+     */
     public List<StatisticsRule> getAll() {
         return statisticsRuleRepository.findAll();
     }
 
+    /**
+     * Увеличивает счетчик срабатывания для указанного правила.
+     * Если правило еще не имеет статистики - создает новую запись.
+     *
+     */
     public void incrementRuleCounter(DynamicRule ruleId) {
         StatisticsRule stats = statisticsRuleRepository.findByDynamicRuleId(ruleId.getId())
                 .orElseGet(() -> {

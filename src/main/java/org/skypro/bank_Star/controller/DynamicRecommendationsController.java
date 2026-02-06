@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+/**
+ * REST контроллер для работы с рекомендациями и правилами.
+ * Основной endpoint для менеджера банка.
+ */
 @RestController
 @RequestMapping("dynamic_recommendations")
 public class DynamicRecommendationsController {
@@ -17,21 +21,28 @@ public class DynamicRecommendationsController {
         this.dynamicRecommendationService = dynamicRecommendationService;
     }
 
+    /**
+     * Создает новую динамическую рекомендацию.
+     */
     @PostMapping
-    public DynamicRecommendation createDynamicRecommendation(@RequestBody DynamicRecommendation dynamicRecommendation){
+    public DynamicRecommendation createDynamicRecommendation(@RequestBody DynamicRecommendation dynamicRecommendation) {
         return dynamicRecommendationService.createDynamicRecommendation(dynamicRecommendation);
     }
 
-    @DeleteMapping ("{id}")
-    public ResponseEntity deleteDynamicRecommendation (@PathVariable long id){
+    /**
+     * Удаляет динамическую рекомендацию по идентификатору.
+     */
+    @DeleteMapping("{id}")
+    public ResponseEntity deleteDynamicRecommendation(@PathVariable long id) {
         dynamicRecommendationService.deleteDynamicRecommendation(id);
         return ResponseEntity.ok().build();
     }
 
+    /**
+     * Возвращает список всех динамических рекомендаций.
+     */
     @GetMapping
     public List<DynamicRecommendation> getALLDynamicRecommendation() {
         return dynamicRecommendationService.getAll();
     }
-
-
 }

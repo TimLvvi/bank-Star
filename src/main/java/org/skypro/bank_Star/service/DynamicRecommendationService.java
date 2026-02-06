@@ -8,6 +8,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * Сервис для управления динамическими правилами рекомендаций.
+ */
+
 @Service
 public class DynamicRecommendationService {
     private DynamicRecommendationsRepositiry dynamicRecommendationsRepositiry;
@@ -16,6 +20,9 @@ public class DynamicRecommendationService {
         this.dynamicRecommendationsRepositiry = dynamicRecommendationsRepositiry;
     }
 
+    /**
+     * Создает новую динамическую рекомендацию.
+     */
     @Transactional
     public DynamicRecommendation createDynamicRecommendation(DynamicRecommendation dynamicRecommendation) {
         if (dynamicRecommendation.getDynamicRule() != null) {
@@ -26,11 +33,17 @@ public class DynamicRecommendationService {
         return dynamicRecommendationsRepositiry.save(dynamicRecommendation);
     }
 
+    /**
+     * Удаляет динамическую рекомендацию по идентификатору.
+     */
     public void deleteDynamicRecommendation(long id) {
         dynamicRecommendationsRepositiry.deleteById(id);
     }
 
+    /**
+     * Возвращает список всех динамических рекомендаций.
+     */
     public List<DynamicRecommendation> getAll() {
-       return dynamicRecommendationsRepositiry.findAll();
+        return dynamicRecommendationsRepositiry.findAll();
     }
 }

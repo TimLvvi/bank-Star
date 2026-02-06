@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import java.util.Objects;
 
 @Entity
-@Table(name= "statistics_rule")
+@Table(name = "statistics_rule")
 public class StatisticsRule {
 
     @Id

@@ -8,8 +8,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @OpenAPIDefinition
 public class BankStarApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(BankStarApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(BankStarApplication.class, args);
+    }
 
 }
